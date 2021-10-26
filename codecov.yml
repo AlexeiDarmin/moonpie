@@ -8,8 +8,6 @@ coverage:
   status:
     default_rules:
       # basic
-      target: 80
+      target: 80%
       threshold: 0%
       base: auto
-      paths:
-        - "src"
