@@ -1,4 +1,4 @@
-name: CI/CD
+name: Sanitation workflow
 
 on: push
 
@@ -13,22 +13,32 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        env:
+          cache-name: cache-repo
 
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+        env:
+          cache-name: cache-node-version
 
       - name: Install dependencies
         run: yarn
+        env:
+          cache-name: cache-node-dependencies
 
-      - name: Run the tests
+      - name: Generate coverage report
         run: yarn test -- --coverage
+        env:
+          cache-name: cache-test-coverage
 
-      - name: Codecov
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true
 
       - name: Build
         run: yarn build
