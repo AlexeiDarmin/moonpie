@@ -6,8 +6,9 @@ coverage:
   round: down
   range: "70...100"
   status:
-    default_rules:
-      # basic
-      target: 80%
-      threshold: 0%
-      base: auto
+    project:
+      default:
+        # basic
+        target: 80%
+        threshold: 0%
+        base: auto
